@@ -29,7 +29,7 @@ function init(){
 	});
 }
 
-// 
+// 서비스 종료 명령 수신 API
 gigagenie.voice.onRequestClose=function(){
 	options={};
 	gigagenie.voice.svcFinished(options,function(result_cd,result_msg,extra){
