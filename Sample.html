@@ -33,26 +33,9 @@ function init(){
             //init 성공
             console.log('Initialize Success');
             //함수 호출 및 개발 진행
-            //getOrderMenu();
 	};
 	});
 }
-
-/*
-function getOrderMenu(){
-    var options = {};
-    options.voicemsg="ABC 피자입니다. 주문하실 메뉴를 말해주세요."
-    gigagenie.voice.getVoiceText(options,function(result_cd, result_msg, extra){
-        if(result_cd===200){
-           alert("Received Text is "+extra.voicetext);
-           document.getElementById('OrderMenu').innerText = "주문 메뉴 : "+extra.voicetext;
-        }
-        else{
-            //tts 실패 시 처리
-        }
-    })
-}
-*/
 
 // dialog Kit 연동하기
 /*
