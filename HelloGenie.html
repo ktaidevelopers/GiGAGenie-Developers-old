@@ -22,20 +22,21 @@ function init(){
             //init 성공
             console.log('Initialize Success');
             //함수 호출 및 개발 진행
+	    //callback 방식
+		var options={};
+		options.ttstext="안녕하세요. 지니에요. 원하시는 기능을 추가해보세요.";
+			gigagenie.voice.sendTTS(options,function(result_cd,result_msg,extra){
+  			  if(result_cd===200){
+  			      //do next action
+  			  } else {
+   			     //extra.reason 에 voice 오류 전달.
+  			  };
+			});
 	};
 	});
 }
 
-//callback 방식
-var options={};
-options.ttstext="안녕하세요. 지니에요. 원하시는 기능을 추가해보세요.";
-gigagenie.voice.sendTTS(options,function(result_cd,result_msg,extra){
-    if(result_cd===200){
-        //do next action
-    } else {
-        //extra.reason 에 voice 오류 전달.
-    };
-});
+
 
 // 서비스 종료 명령 수신 API
 gigagenie.voice.onRequestClose=function(){
