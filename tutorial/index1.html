@@ -1,0 +1,127 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=utf-8" />
+<meta name="viewport" content="height=1080, width=1920, user-scalable=no" />
+<style type ="text/css">
+     body {
+        background:url('image/newmenu.png') no-repeat center center;
+        min-height:50%;
+        background-size:cover; 
+        font-size: 40px;
+		overflow:hidden;
+    }
+#Menu{
+	position: fixed;
+	width:100%;
+	top:890px;
+	left:1030px;
+	text-align: left;
+	vertical-align: bottom;
+	color: black;
+	font-size: 25pt;	
+	align-content: left;
+}
+
+#Amount{
+	position: fixed;
+	width:100%;
+	top:890px;
+	left:380px;
+	text-align: center;
+	vertical-align: bottom;
+	color: black;
+	font-size: 25pt;	
+	align-content: center;
+}
+
+</style>
+
+<script type="text/javascript" src="http://svcapi.gigagenie.ai/sdk/v1.0/js/gigagenie.js"></script>
+<script type="text/javascript">
+var options={};
+// 서비스 초기화
+function init(){
+	options={};
+	options.keytype="GBOXDEVM"; // 개발(GBOXDEVM) 또는 상용(GBOXCOMM) 키 종류 입력
+	options.apikey="RTUwMDE2MzB8R0JPWERFVk18MTUyNDQ2MjA2MTE2Mg=="; // 개발자 포털에서 키를 발급받아 입력
+	gigagenie.init(options,function(result_cd,result_msg,extra){
+        if(result_cd===200){
+            //init 성공
+            console.log('Initialize Success');
+            //함수 호출 및 개발 진행
+            alert("init 실행 완료");
+			sendTTSAPI("올레피자 신메뉴를 보여드릴께요. 호출어를 부른뒤 주문하시고 싶은 메뉴와 수량을 화면과 같이 말씀해주세요.");
+	};
+	});
+}
+// dialog Kit 연동하기
+/*
+    Dialog Kit 작성 내용
+    [어휘사전]
+        - NE-PIZZA / 각 피자 메뉴 등록 (예, 불고기피자, 페페로니피자 등)
+        - PR-ORDER / 주문 기능 동사 등록 (예, 주문, 주문해줘, 주문할래 등) 
+        - NE-AMOUNT / 개수 정보 등록 (예, 한 판, 1판, 두 판, 2판 등)
+    [인텐트]
+        - OrderMenu / 인텐트 규칙(어휘사전 조합) : NE-PIZZA*PR-ORDER
+    1) "지니야, 페페로니피자 주문해줘"
+        [NE-PIZZA:페페로니피자] 정보 전달
+    2) "지니야, 불고기피자 두 판 주문해줘"
+        [NE-PIZZA:불고기피자], [NE-AMOUNT:두 판] 정보 전달 
+        (***「Dialog Kit>대화모델 관리>인텐트 관리」 내 대화모델 시뮬레이터 테스트로 CS 정보 확인 가능)
+    3) "지니야, 불고기피자" or "지니야, 주문해줘"
+        인텐트 규칙에 해당되지 않으므로 실행 안 됨
+*/
+// 포털 내 Service SDK 정보 수정에서 작성한 서비스 URL보다 우선 순위로 실행됨
+
+
+gigagenie.voice.onActionEvent=function(extra){
+	var word = extra.uword;
+    	switch(extra.actioncode){
+        // OrderMenu 인텐트 처리
+        case 'OrderMenu':
+		//"지니야, 불고기피자 2판 주문해줘" 발화 실행
+		// extra.parameter['NE-어휘사전']으로 정보 추출, 각 사전 대표단어가 출력됨.
+		document.getElementById('Menu').innerText = extra.parameter['NE-PIZZA'];
+		document.getElementById('Amount').innerText = extra.parameter['NE-AMOUNT'];
+		sendTTSAPI("주문이 완료되었습니다. 감사합니다.");
+		break;
+        default:
+		break;
+	}
+}
+
+
+function sendTTSAPI(ttstext) {
+	var options={};
+
+	alert("startTTS")
+	options.ttstext = ttstext;
+	gigagenie.voice.sendTTS(options,function(result_cd,result_msg,extra) {
+		
+
+	if(result_cd == 200) {
+
+		}
+	else if(result_cd == 501){} // KWS에 의해 정지됨 (Pause/Resume)
+	else if(result_cd == 503){} // StopTTS에 의해 정지됨 (Pause/Resume)
+	alert(result_cd);
+	
+	});
+}	
+
+
+// 서비스 종료 명령 수신 API
+gigagenie.voice.onRequestClose=function(){
+	options={};
+	gigagenie.voice.svcFinished(options,function(result_cd,result_msg,extra){
+	});
+};
+</script>
+</head>
+
+<body onload=init()>
+    <div id="Menu"></div>
+    <div id="Amount"></div>
+</body>
+</html>

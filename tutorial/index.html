@@ -1,0 +1,138 @@
+﻿<html>
+
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=utf-8" />
+<meta name="viewport" content="height=1080, width=1920, user-scalable=no" />
+<style>
+
+     body {
+        background:url('image/pizza.png') no-repeat center center;
+        min-height:50%;
+        background-size:cover; 
+        font-size: 40px;
+		overflow:hidden;
+    }
+	#audio_play_quit {
+		position: fixed;
+		margin-left: -10px;
+		margin-top: -10px;
+        width: 105%;
+        height: 105%;
+		z-index: 9999;
+		overflow: hidden;
+		visibility: hidden;
+	}
+    #show_level_one {
+        position: fixed;
+		text-align: center;
+        left: 680px;
+        bottom: 350px;
+        width: 210px;
+        height: 150px;
+        visibility: visible;
+    }
+    #hide_level_one {
+        position: fixed;
+		text-align: center;
+        left: 680px;
+        bottom: 350px;
+        width: 210px;
+        height: 150px;
+        visibility: hidden;
+    }
+    #show_level_two {
+        position: fixed;
+		text-align: center;
+        left: 960px;
+        bottom: 350px;
+        width: 210px;
+        height: 150px;
+        visibility: hidden;
+    }
+    #hide_level_two {
+        position: fixed;
+		text-align: center;
+        left: 960px;
+        bottom: 350px;
+        width: 210px;
+        height: 150px;
+        visibility: visible;
+    }
+    #show_level_three {
+        position: fixed;
+		text-align: center;
+        left: 1240px;
+        bottom: 350px;
+        width: 210px;
+        height: 150px;
+        visibility: hidden;
+    }
+    #hide_level_three {
+        position: fixed;
+		text-align: center;
+        left: 1240px;
+        bottom: 350px;
+        width: 210px;
+        height: 150px;
+        visibility: visible;
+    }
+
+</style>
+
+<script type="text/javascript" src="http://svcapi.gigagenie.ai/sdk/v1.0/js/gigagenie.js"></script>
+<script type="text/javascript">
+
+
+
+var options={};
+
+// 서비스 초기화 API
+function init(){
+	options={};
+        options.keytype="GBOXDEVM"; // 개발(GBOXDEVM) 또는 상용(GBOXCOMM) 키 종류 입력
+	options.apikey="RTUwMDE2MzB8R0JPWERFVk18MTUyNDQ2MjA2MTE2Mg=="; // 개발자 포털에서 키를 발급받아 입력
+	gigagenie.init(options,function(result_cd,result_msg,extra){
+		if(result_cd == 200){
+			//init 성공
+			console.log('Initialize Success');
+			//함수 호출 및 개발 진행
+			alert("init 실행 완료");
+			sendTTSAPI("올레피자 서비스를 실행합니다. 신메뉴를 보고 싶으시면 호출어를 부른 뒤 신메뉴 보여줘 라고 말씀해주세요.");
+		};
+	});
+}
+
+
+function sendTTSAPI(ttstext) {
+	var options={};
+
+	alert("startTTS")
+	options.ttstext = ttstext;
+	gigagenie.voice.sendTTS(options,function(result_cd,result_msg,extra) {
+		
+
+	if(result_cd == 200) {
+
+		}
+	else if(result_cd == 501){} // KWS에 의해 정지됨 (Pause/Resume)
+	else if(result_cd == 503){} // StopTTS에 의해 정지됨 (Pause/Resume)
+	alert(result_cd);
+	
+	});
+}	
+
+
+/// 서비스 종료 명령 수신 API
+gigagenie.voice.onRequestClose=function(){
+	options={};
+	gigagenie.voice.svcFinished(options,function(result_cd,result_msg,extra){
+	});
+};
+</script>
+</head>
+
+<body onload=init()>
+
+
+</body>
+</html>
