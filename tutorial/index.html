@@ -2,11 +2,12 @@
 
 <head>
 <meta http-equiv="Content-Type" Content="text/html; charset=utf-8" />
+// 기가지니 화면은 Full HD를 기준으로 렌더링됨. 따라서 웹 구성은 가로 1920, 세로 1080 pixel로 작성되어야 하며 meta tag로 viewport가 추가되어야 한다.
 <meta name="viewport" content="height=1080, width=1920, user-scalable=no" />
 <style>
 
      body {
-        background:url('image/pizza.png') no-repeat center center;
+        background:url('image/pizza.png') no-repeat center center; // 올레피자 서비스 메인화면 이미지 삽입
         min-height:50%;
         background-size:cover; 
         font-size: 40px;
@@ -79,6 +80,7 @@
 
 </style>
 
+// ServiceSDK JavaScript를 Embed 함
 <script type="text/javascript" src="http://svcapi.gigagenie.ai/sdk/v1.0/js/gigagenie.js"></script>
 <script type="text/javascript">
 
@@ -87,10 +89,11 @@
 var options={};
 
 // 서비스 초기화 API
+// gigagenie 객체를 이용하기 위해서는 초기에 init 함수 호출 필요
 function init(){
 	options={};
-        options.keytype="GBOXDEVM"; // 개발(GBOXDEVM) 또는 상용(GBOXCOMM) 키 종류 입력
-	options.apikey="RTUwMDE2MzB8R0JPWERFVk18MTUyNDQ2MjA2MTE2Mg=="; // 개발자 포털에서 키를 발급받아 입력
+        options.keytype="GBOXDEVM 또는 GBOXCOMM"; // 개발(GBOXDEVM) 또는 상용(GBOXCOMM) 키 종류 입력
+	options.apikey="개발/상용 키"; // 개발자 포털에서 키를 발급받아 입력
 	gigagenie.init(options,function(result_cd,result_msg,extra){
 		if(result_cd == 200){
 			//init 성공
@@ -102,7 +105,8 @@ function init(){
 	});
 }
 
-
+// TTS 송출 API
+// 입력 Text를 사용자에게 음성으로 전달
 function sendTTSAPI(ttstext) {
 	var options={};
 
@@ -122,7 +126,8 @@ function sendTTSAPI(ttstext) {
 }	
 
 
-/// 서비스 종료 명령 수신 API
+// 서비스 종료 명령 수신 API
+// 음성명령(종료, 닫기 발화)과, 리모콘 나가기 버튼 클릭시 서비스 종료 이벤트 전달
 gigagenie.voice.onRequestClose=function(){
 	options={};
 	gigagenie.voice.svcFinished(options,function(result_cd,result_msg,extra){
