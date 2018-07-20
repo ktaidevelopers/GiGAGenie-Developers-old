@@ -1,2 +1,49 @@
 <html>
+
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=utf-8" />
+<meta name="viewport" content="height=1080, width=1920, user-scalable=no" />
+<style>
+
+  
+
+</style>
+
+  
+// ServiceSDK JavaScript를 Embed 함
+<script type="text/javascript" src="http://svcapi.gigagenie.ai/sdk/v1.0/js/gigagenie.js"></script>
+<script type="text/javascript">
+
+var options={};
+  
+// 서비스 초기화 API
+// gigagenie 객체를 이용하기 위해서는 초기에 init 함수 호출 필요
+function init(){
+	options={};
+        options.keytype="GBOXDEVM 또는 GBOXCOMM"; // 개발(GBOXDEVM) 또는 상용(GBOXCOMM) 키 종류 입력
+	options.apikey="개발/상용 키"; // 개발자 포털에서 키를 발급받아 입력
+	gigagenie.init(options,function(result_cd,result_msg,extra){
+		if(result_cd == 200){
+			//init 성공
+			console.log('Initialize Success');
+			//함수 호출 및 개발 진행
+			alert("init 실행 완료");
+		};
+	});
+}
+
+// 서비스 종료 명령 수신 API
+// 음성명령(종료, 닫기 발화)과, 리모콘 나가기 버튼 클릭시 서비스 종료 이벤트 전달
+gigagenie.voice.onRequestClose=function(){
+	options={};
+	gigagenie.voice.svcFinished(options,function(result_cd,result_msg,extra){
+	});
+};
+</script>
+</head>
+
+<body onload=init()>
+
+</body>
+  
 </html>
