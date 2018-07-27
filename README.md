@@ -1,2 +1,2 @@
-# GiGAGenie-Developers
-KT GiGA Genie Developers Docuements
+# GiGA Genie-Developers
+KT GiGA Genie Developers Documents
